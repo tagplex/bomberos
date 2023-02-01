@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<%- include("../partials/head.ejs", {titulo: "Listado de usuarios" }) %>
+
+  <body class="hold-transition sidebar-mini layout-fixed dark-mode">
+    <div class="wrapper">
+      <%- include("../partials/navbar.ejs") %>
+        <%- include("../partials/navbar-left.ejs") %>
+          <div class="content-wrapper">
+            <div class="content-header">
+              <div class="container-fluid">
+                <div class="row mb-2">
+                  <div class="col-sm-6">
+                    <!-- Espacio para colocar un titulo general<h1 class="m-0">Dashboard</h1> -->
+                  </div>
+                </div>
+                <section class="content">
+                  <div class="container-fluid">
+                    <div class="card card-info">
+                      <div class="card-header">
+                        <h3 class="card-title"><b>Listado de usuarios </b><a href="/users/createUser" class="btn btn-success"><i class="fas fa-user-plus"></i> Agregar usuario</a></h3>
+                      </div>
+                      <div class="row">
+                        <div class="col-12">
+                          <!-- /.card-header -->
+                          <div class="card-body">
+                            <div class="table-responsive">
+                            <table id="viewUsers" class="table table-bordered table-striped" style="text-align: center">
+                              <thead style="text-align: center">
+                                <tr>
+                                  <th>Opciones</th>
+                                  <th>Nombre</th>
+                                  <th>Apellido</th>
+                                  <th>Correo</th>
+                                  <th>Rol</th>
+                                  <th>Estado</th>
+                                </tr>
+                              </thead>
+                              <tbody>
+                                <% for(let i=0; i < users.length; i++ ) { %>
+                                  <tr>
+                                    <td>
+                                      <div class="btn-group">
+                                        <a href="/users/edit/<%= users[i].id %>" class="btn btn-success"><i class="fas fa-user-edit"></i> Editar</a>
+                                      </div>
+                                    </td>
+                                    <td>
+                                      <%= users[i].first_name %>
+                                    </td>
+                                    <td>
+                                      <%= users[i].last_name %>
+                                    </td>
+                                    <td>
+                                      <%= users[i].email %>
+                                    </td>
+                                    <td>
+                                      <% if(users[i].id_rol==1) { %>
+                                        <span class="badge bg-success">Administrador</span>
+                                        <% } else { %>
+                                          <span class="badge bg-info">Visualizador</span>
+                                          <% } %>
+                                    </td>
+                                    <td>
+                                      <% if(users[i].state==1) { %>
+                                        <span class="badge bg-success">Habilitado</span>
+                                        <% } else { %>
+                                          <span class="badge bg-danger">Deshabilitado</span>
+                                          <% } %>
+                                    </td>
+                                    <% } %>
+                                  </tr>
+                              </tbody>
+                            </table>
+                          </div>
+                          </div>
+                          <!-- /.card-body -->
+                        </div>
+                        <!-- /.card -->
+                      </div>
+                      <!-- /.col -->
+                    </div>
+                    <!-- /.row -->
+                  </div>
+                </section>
+              </div>
+            </div>
+          </div>
+    </div>
+    <%- include("../partials/scripts.ejs") %>
+    <%- include("../partials/footer.ejs") %>
+    <script src="/js/user.js"></script>
+  </body>
+
+</html>

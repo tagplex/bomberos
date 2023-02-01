@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<%- include("../partials/head.ejs", {titulo: "Enviar resultado a correo" }) %>
+
+  <body class="hold-transition sidebar-mini layout-fixed dark-mode">
+    <div class="wrapper">
+      <%- include("../partials/navbar.ejs") %>
+        <%- include("../partials/navbar-left.ejs") %>
+          <div class="content-wrapper">
+            <div class="content-header">
+              <div class="container-fluid">
+                <div class="row mb-2">
+                  <div class="col-sm-6">
+                    <!-- Espacio para colocar un titulo general<h1 class="m-0">Dashboard</h1> -->
+                  </div>
+                </div>
+                <section class="content">
+                  <div class="container-fluid col-10">
+                    <div class="card card-info">
+                      <div class="card-header">
+                        <h3 class="card-title"><i class="fas fa-edit"></i> Enviar resultado por correo</h3>
+                      </div>
+                      <div class="row">
+                        <div class="col-12">
+                          <div class="card-body">
+                            <form action="/results/sendemail" id="sendResult" method="POST">
+                              <div class="input-group mb-3 form-group">
+                                <div class="input-group bg-dark">
+                                  <input type="text" name="id" value="<%= result != undefined ? result.id : "" %>" hidden>
+                                  <input type="text" name="email" id="email" class="form-control bg-dark" placeholder="Run"
+                                    value="<%= locals.userLogged.email %>">
+                                  <div class="input-group-append">
+                                    <div class="input-group-text">
+                                      <span class="fas fa-id-card"></span>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="input-group mb-3 form-group">
+                                <div class="input-group bg-dark">
+                                  <input type="text" name="email2" id="email2" class="form-control bg-dark" placeholder="Segundo correo" 
+                                  value="<%= locals.oldData ? oldData.email2 : null %>">
+                                  <div class="input-group-append">
+                                    <div class="input-group-text">
+                                      <span class="fas fa-id-card"></span>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="input-group mb-3 form-group">
+                                <embed src="/pdf/<%= result.file %>" width="100%" height="400px"type="application/pdf">
+                              </div>
+                              <div class="input-group mb-3form-group">
+                                <div class="mtcaptcha" style="width: 100%;"></div>
+                              </div>
+                              <div class="row">
+                                <div class="col-4">
+                                  <a href="/results/view" class="btn btn-secondary" style="margin-right:10px;"><i
+                                      class="fas fa-reply"></i> Volver</a>
+                                  <button type="submit" class="btn btn-primary"><i class="fas fa-envelope"></i>
+                                    Enviar</button>
+                                </div>
+                              </div>
+                            </form>
+                            <% if (locals.errors && errors.email) { %>
+                              <p style="color: rgb(204, 29, 29);">
+                                <%= errors.email.msg %>
+                              </p>
+                            <% } %>
+                            <% if (locals.errors && errors.email2) { %>
+                              <p style="color: rgb(204, 29, 29);">
+                                <%= errors.email2.msg %>
+                              </p>
+                            <% } %>
+                            <% if (locals.errors && errors.captcha) { %>
+                              <p style="color: rgb(204, 29, 29);">
+                                <%= errors.captcha.msg %>
+                              </p>
+                            <% } %>
+                          </div>
+                          <!-- /.card-body -->
+                        </div>
+                        <!-- /.card -->
+                      </div>
+                      <!-- /.col -->
+                    </div>
+                    <!-- /.row -->
+                  </div>
+                </section>
+              </div>
+            </div>
+          </div>
+    </div>
+    <%- include("../partials/footer.ejs") %>
+      <%- include("../partials/scripts.ejs") %>
+      <script src="/js/uploadvalidate.js"></script>
+  </body>
+
+</html>

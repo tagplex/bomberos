@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<%- include("../partials/head.ejs", {titulo: "Subir resultado" }) %>
+
+  <body class="hold-transition sidebar-mini layout-fixed dark-mode">
+    <div class="wrapper">
+      <%- include("../partials/navbar.ejs") %>
+        <%- include("../partials/navbar-left.ejs") %>
+          <div class="content-wrapper">
+            <div class="content-header">
+              <div class="container-fluid">
+                <div class="row mb-2">
+                  <div class="col-sm-6">
+                    <!-- Espacio para colocar un titulo general<h1 class="m-0">Dashboard</h1> -->
+                  </div>
+                </div>
+                <section class="content">
+                  <div class="container-fluid">
+                    <div class="card card-info">
+                      <div class="card-header">
+                        <h3 class="card-title"><b>Cargar Resultados</b></h3>
+                      </div>
+                      <!-- /.card-header -->
+                      <div class="card-body">
+                        <form action="/results/r/upload" id="formUpload" method="GET">
+                          <% if (alert) { %>
+                            <script>
+                              swal({
+                                title: "Resultado cargado",
+                                text: "El resultado se cargo correctamente",
+                                icon: "success",
+                                button: "Aceptar",
+                              });  
+                            </script>
+                          <% } %>
+                          <% if (locals.errors && errors.run) { %>
+                            <script>/* swal("Captcha requerido"); */
+                              swal({
+                                title: "Atención!",
+                                text: '<%= errors.run.msg %>',
+                                icon: "error",
+                                button: "Aceptar",
+                              });  
+                            </script>
+                          <% } %>
+                          <div class="row">
+                            <div class="col-sm-3">
+                              <div class="form-group">
+                                <label>RUN</label>
+                                <div class="input-group mb-2 form-group">
+                                  <input type="text" class="form-control" placeholder="Ingrese el rut del paciente"
+                                    name="run" id="run" onkeyup="formatCliente(this)">
+                                  <div class="input-group-append">
+                                    <button class="btn btn-outline-info" type="submit" id="button-addon2"><span
+                                        class="fa fa-search icon"></span></button>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                            <div id="form-group">
+                              <div class="col-md-12">
+                                <label>Opciones</label><br>
+                                <button type="button" id="edit_patient" class="btn btn-primary" data-toggle="modal"
+                                  data-target="#modalEditPatient" disabled><i class="fas fa-user-edit"></i> Editar</button>
+                                <button type="button" id="add_patient" class="btn btn-primary" data-toggle="modal"
+                                  data-target="#modalCreatePatient"><i class="fas fa-user-plus"></i> Agregar</button>
+                              </div>
+                            </div>
+                            <!-- RUT -->
+                            <div class="col-sm-2">
+                              <div class="form-group">
+                                <label>RUN</label><br>
+                                <input type="text" id="run_disable" class="form-control" placeholder="Sin datos"
+                                  value="<%= patient != undefined ? patient.run : "" %>" disabled>
+                              </div>
+                            </div>
+                            <!-- NOMBRE -->
+                            <div class="col-sm-2">
+                              <div class="form-group">
+                                <label>Nombre</label><br>
+                                <input type="text" name="first_name" class="form-control" placeholder="Sin datos"
+                                  value="<%= patient != undefined ? patient.first_name : "" %>" disabled>
+                              </div>
+                            </div>
+                            <!-- APELLIDO -->
+                            <div class="col-sm-2">
+                              <div class="form-group">
+                                <label>Apellido</label><br>
+                                <input type="text" name="last_name" class="form-control" placeholder="Sin datos"
+                                  value="<%= patient != undefined ? patient.last_name : "" %>" disabled>
+                              </div>
+                            </div>
+                          </div>
+                        </form>
+
+                        <div class="modal fade" id="modalEditPatient" tabindex="-1" role="dialog"
+                          aria-labelledby="exampleModalLabel" aria-hidden="true">
+                          <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                              <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel"><i class="fas fa-user-edit"></i> Edición
+                                  paciente
+                                </h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                  <span aria-hidden="true">&times;</span>
+                                </button>
+                              </div>
+                              <div class="modal-body">
+                                <div class="card-body">
+                                  <% if(patient==null) { %>
+                                    <form action="/" id="editPatient" method="POST">
+                                      <% } else { %>
+                                        <form action="/patients/edit/<%= patient.id %>?_method=PATCH" id="editPatient" method="POST">
+                                          <% } %>
+                                            <div class="input-group mb-3 form-group">
+                                              <input type="text" class="form-control bg-dark" name="run" id="run"
+                                                placeholder="Rut" onkeyup="formatCliente(this)"
+                                                value="<%= patient != undefined ? patient.run : "" %>">
+                                            </div>
+                                            <div class="input-group mb-3 form-group">
+                                              <input type="text" name="first_name" class="form-control bg-dark"
+                                                placeholder="Nombre"
+                                                value="<%= patient != undefined ? patient.first_name : "" %>">
+                                            </div>
+                                            <div class="input-group mb-3 form-group">
+                                              <input type="text" name="last_name" class="form-control bg-dark"
+                                                placeholder="Primer apellido"
+                                                value="<%= patient != undefined ? patient.last_name : "" %>">
+                                            </div>
+                                            <div class="input-group mb-3 form-group">
+                                              <input type="text" name="maiden_name" class="form-control bg-dark"
+                                                placeholder="Segundo apellido"
+                                                value="<%= patient != undefined ? patient.maiden_name : "" %>">
+                                            </div>
+                                            <div class="row">
+                                              <div class="col-8">
+                                                <button type="button" class="btn btn-secondary"
+                                                  data-dismiss="modal" style="margin-right: 10px;"><i
+                                                  class="fas fa-reply"></i> Cerrar</button>
+                                                <button type="submit" class="btn btn-success"><i
+                                                    class="fas fa-edit"></i>
+                                                  Editar</button>
+                                              </div>
+                                              <!-- /.col -->
+                                            </div>
+                                        </form>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div class="modal fade" id="modalCreatePatient" tabindex="-1" role="dialog"
+                          aria-labelledby="exampleModalLabel" aria-hidden="true">
+                          <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                              <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel"><i class="fas fa-user-plus"></i>
+                                  Registrar paciente
+                                </h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                  <span aria-hidden="true">&times;</span>
+                                </button>
+                              </div>
+                              <div class="modal-body">
+                                <div class="card-body">
+                                  <form action="/patients" id="createPatient" method="POST">
+                                    <div class="input-group mb-3 form-group">
+                                      <input type="text" class="form-control bg-dark" name="run" id="run"
+                                        placeholder="Run" onkeyup="formatCliente(this)">
+                                    </div>
+                                    <div class="input-group mb-3 form-group">
+                                      <input type="text" name="first_name" class="form-control bg-dark"
+                                        placeholder="Nombre">
+                                    </div>
+                                    <div class="input-group mb-3 form-group">
+                                      <input type="text" name="last_name" class="form-control bg-dark"
+                                        placeholder="Primer apellido">
+                                    </div>
+                                    <div class="input-group mb-3 form-group">
+                                      <input type="text" name="maiden_name" class="form-control bg-dark"
+                                        placeholder="Segundo apellido">
+                                    </div>
+                                    <div class="row">
+                                      <div class="col-8">
+                                        <button type="button" class="btn btn-secondary"
+                                          data-dismiss="modal" style="margin-right: 10px;"><i class="fas fa-reply"></i> Cerrar</button>
+                                        <button type="submit" class="btn btn-success"> <i class="fas fa-user-plus"></i>
+                                          Registrar</button>
+                                      </div>
+                                      <!-- /.col -->
+                                    </div>
+                                  </form>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+
+                        <form action="/results" id="uploadResults" method="POST" enctype="multipart/form-data">
+                          <div class="row">
+                            <div class="col-sm-3">
+                              <div class="form-group">
+                                <label>Seleccione el archivo</label>
+                                <input type="text" name="id_patient" value="<%= patient != undefined ? patient.id : "" %>" hidden>
+                                <input type="file" name="file" id="file" class="form-control" value="<%= locals.oldData ? oldData.file : null %>">
+                              </div>
+                            </div>
+                            <div class="col-sm-3">
+                              <div class="form-group">
+                                <label>Numero de petición</label>
+                                <input type="text" name="code" id="code" class="form-control"
+                                  placeholder="Mismo codigo de infinity" onfocusout="enable()" value="<%= locals.oldData ? oldData.code : null %>">
+                              </div>
+                            </div>
+                            <div class="col-sm-3">
+                              <div class="form-group">
+                                <label>Opciones</label><br>
+                                <button type="submit" class="btn btn-primary" id="upload_result"><i
+                                    class="fas fa-file-upload"></i> Cargar
+                                </button>
+                              </div>
+                            </div>
+                          </div>
+                        </form>
+                        <% if (locals.errors && errors.id_patient) { %>
+                          <script>
+                            swal({
+                              title: "Error!",
+                              text: "Para subir un resultado debes seleccionar un paciente.",
+                              icon: "error",
+                              button: "Aceptar",
+                            });  
+                          </script>
+                          <p style="color: rgb(204, 29, 29);">
+                            <%= errors.id_patient.msg%>
+                          </p>
+                        <% } %>
+                        <% if (locals.errors && errors.file) { %>
+                          <p style="color: rgb(204, 29, 29);">
+                            <%= errors.file.msg%>
+                          </p>
+                        <% } %>
+                        <% if (locals.errors && errors.code) { %>
+                          <p style="color: rgb(204, 29, 29);">
+                            <%= errors.code.msg%>
+                          </p>
+                        <% } %>
+                      </div>
+                    </div>
+                    <!-- /.card-body -->
+                  </div>
+                </section>
+              </div>
+            </div>
+          </div>
+          <%- include("../partials/footer.ejs") %>
+            <!--             </div> -->
+            <%- include("../partials/scripts.ejs") %>
+              <script src="/js/upload.js"></script>
+              <script src="/js/uploadvalidate.js"></script>
+  </body>
+
+</html>

@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<%- include ("../partials/head.ejs", {titulo: "Registro de usuario" }) %>
+<link rel="stylesheet" href="/css/index.css"> 
+
+  <body class="hold-transition register-page bg-dark">
+    <div class="register-box ">
+      <div class="card card-outline card-primary bg-dark">
+        <div class="card-header text-center bg-dark">
+          <a href="#" class="h1"><b>Registro</b></a>
+        </div>
+        <div class="card-body">
+          <p class="login-box-msg">Una vez que te registres, el administrador tiene que habilitar tu cuenta.</p>
+          <% if (locals.errors && errors.emailexist) { %>
+            <script>
+              swal({
+                title: "Atención!",
+                text: '<%= errors.emailexist.msg%>',
+                icon: "error",
+                button: "Aceptar",
+              });  
+            </script>
+          <% } %>
+          <form action="/users" id="formRegister" method="POST">
+            <div class="input-group mb-3 form-group">
+              <div class="input-group bg-dark">
+                <input type="text" name="first_name" class="form-control bg-dark" placeholder="Nombre"
+                  value="<%= locals.oldData ? oldData.first_name : null %>">
+                <div class="input-group-append">
+                  <div class="input-group-text bg-dark">
+                    <span class="fas fa-user"></span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="input-group mb-3 form-group">
+              <div class="input-group bg-dark">
+              <input type="text" name="last_name" class="form-control bg-dark" placeholder="Apellido"
+                value="<%= locals.oldData ? oldData.last_name : null %>">
+              <div class="input-group-append">
+                <div class="input-group-text bg-dark">
+                  <span class="fas fa-user"></span>
+                </div>
+              </div>
+            </div>
+            </div>
+            <div class="input-group mb-3 form-group">
+              <div class="input-group bg-dark">
+              <input type="text" name="email" class="form-control bg-dark" placeholder="Correo"
+                value="<%= locals.oldData ? oldData.email : null %>">
+              <div class="input-group-append">
+                <div class="input-group-text bg-dark">
+                  <span class="fas fa-envelope"></span>
+                </div>
+              </div>
+            </div>
+            </div>
+            <div class="input-group mb-3 form-group">
+              <div class="input-group bg-dark">
+              <input type="password" id="password" name="password" class="form-control bg-dark"
+                placeholder="Contraseña">
+              <div class="input-group-append">
+                <div class="input-group-text bg-dark">
+                  <span class="fas fa-lock"></span>
+                </div>
+              </div>
+            </div>
+            </div>
+            <div class="input-group mb-3 form-group">
+              <div class="input-group bg-dark">
+              <input type="password" name="repeatPassword" class="form-control bg-dark"
+                placeholder="Repite tu contraseña">
+              <div class="input-group-append">
+                <div class="input-group-text bg-dark">
+                  <span class="fas fa-lock"></span>
+                </div>
+              </div>
+            </div>
+            </div>
+            <div class="input-group mb-1 form-group">
+              <div class="mtcaptcha" style="width: 100%;"></div>
+            </div>
+            <div class="row">
+              <!-- /.col -->
+              <div class="col-4">
+                <button type="submit" class="btn btn-primary btn-block">Registro</button>
+              </div>
+            </div>
+          </form>
+          <% if (locals.errors && errors.first_name) { %>
+            <p style="color: rgb(204, 29, 29);">
+              <%= errors.first_name.msg%>
+            </p>
+          <% } %>
+          <% if (locals.errors && errors.last_name) { %>
+            <p style="color: rgb(204, 29, 29);">
+              <%= errors.last_name.msg%>
+            </p>
+          <% } %>
+          <% if (locals.errors && errors.email) { %>
+            <p style="color: rgb(204, 29, 29);">
+              <%= errors.email.msg%>
+            </p>
+          <% } %>
+          <% if (locals.errors && errors.password) { %>
+            <p style="color: rgb(204, 29, 29);">
+              <%= errors.password.msg%>
+            </p>
+          <% } %>
+          <% if (locals.errors && errors.repeatPassword) { %>
+            <p style="color: rgb(204, 29, 29);">
+              <%= errors.repeatPassword.msg%>
+            </p>
+          <% } %>
+          <% if (locals.errors && errors.captcha) { %>
+            <p style="color: rgb(204, 29, 29);">
+              <%= errors.captcha.msg%>
+            </p>
+          <% } %>
+          <p class="mb-0">
+            <a href="/users/login" class="text-center">Tengo cuenta</a>
+          </p>
+        </div>
+        <!-- /.form-box -->
+      </div><!-- /.card -->
+    </div>
+    <!-- /.register-box -->
+    <%- include("../partials/scripts.ejs") %>
+    <!-- <script src="/js/register.js"></script> -->
+  </body>
+
+</html>

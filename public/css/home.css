@@ -1,0 +1,12 @@
+.contenedor-home{
+    width: 90%;
+    margin: auto;
+}
+
+
+@media (min-width: 801px) {
+    .contenedor-home{
+        width: 75%;
+        margin: auto;
+    }
+}

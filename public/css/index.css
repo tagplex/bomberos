@@ -1,0 +1,80 @@
+body, header, footer {
+    width: 100%;
+    margin: 0;
+/*     background-color: #a3b5c2;
+ */}
+
+main {
+    margin-top: 50px;
+}
+
+#logo-login {
+    width: 50px;
+    margin: auto;
+    margin-top: 10px;
+}
+
+.principal-div {
+    width: 95%;
+    margin: auto;
+}
+
+.container {
+    margin: auto;
+    text-align: center;
+    width: 100%;
+    border-radius: 5px 5px 5px 5px;
+    background-color: white;
+}
+
+.col-12 {
+    margin-top: 15px;
+    padding-bottom: 15px;
+    font-weight: bold;
+    border-bottom: 1px solid black;
+}
+
+.col-6 {
+    margin-top: 30px;
+    font-weight: bold;
+    margin-bottom: 30px;
+}
+
+.registrate {
+    margin-top: 10px;
+}
+.btn-index{
+    margin-top: 30px;
+}
+.div-icono{
+    margin-top: 100px;
+    display: flex;
+    justify-content: center;
+}
+.iconos {
+    text-align: center;
+    font-size: 50px;
+}
+.text-footer{
+    margin-top: 100px;
+    text-align: center;
+}
+
+@media (min-width: 801px) {
+    .principal-div, header, footer {
+        width: 50%;
+        margin: auto;
+    }
+
+    .container {
+        margin-top: 180px;
+        width: 75%;
+        padding: 10px;
+        -webkit-box-shadow: inset 0px 6px 25px 6px rgba(178, 192, 214, 0.2);
+        -moz-box-shadow: inset 0px 6px 25px 6px rgba(178, 192, 214, 0.2);
+        box-shadow: inset 0px 6px 25px 6px rgba(178, 192, 214, 0.2);
+    }
+    .col-12{
+        font-size: 20px;
+    }
+}

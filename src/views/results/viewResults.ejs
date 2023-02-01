@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<%- include("../partials/head.ejs", {titulo: "Busqueda de resultados" }) %>
+
+  <body class="hold-transition sidebar-mini layout-fixed dark-mode">
+    <div class="wrapper">
+      <%- include("../partials/navbar.ejs") %>
+        <%- include("../partials/navbar-left.ejs") %>
+          <div class="content-wrapper">
+            <div class="content-header">
+              <div class="container-fluid">
+                <div class="row mb-2">
+                  <div class="col-sm-6">
+                    <!-- Espacio para colocar un titulo general<h1 class="m-0">Dashboard</h1> -->
+                  </div>
+                </div>
+                <section class="content">
+                  <div class="card card-info mt-12">
+                    <div class="card-header">
+                      <h3 class="card-title"><b>Busqueda mediante nombre y apellido y/o run</b></h3>
+                    </div>
+                    <!-- /.card-header -->
+                    <div class="card-body">
+                      <% if (alertdelete) { %>
+                        <script>
+                          swal({
+                            title: "Resultado eliminado",
+                            text: "El resultado se elimino correctamente",
+                            icon: "success",
+                            button: "Aceptar",
+                          });  
+                        </script>
+                        <% } %>
+                        <% if (sendemail) { %>
+                          <script>
+                            swal({
+                              title: "Resultado enviado",
+                              text: "El resultado se envio correctamente",
+                              icon: "success",
+                              button: "Aceptar",
+                            });  
+                          </script>
+                        <% } %>
+                        <% if (errorsendemail) { %>
+                          <script>
+                            swal({
+                              title: "Error al enviar resultado",
+                              text: "No se pudo enviar el resultado, debido a que el archivo no existe en el sistema",
+                              icon: "error",
+                              button: "Aceptar",
+                            });  
+                          </script>
+                        <% } %>
+                          <form action="/results/search" method="GET">
+                            <div class="row">
+                              <div class="col-md-2">
+                                <div class="form-group">
+                                  <label>Nombre</label>
+                                  <input type="search" name="search1" class="form-control form-control"
+                                    placeholder="Ingrese el nombre">
+                                </div>
+                              </div>
+                              <!-- /.col -->
+                              <div class="col-md-2">
+                                <div class="form-group">
+                                  <label>Primer Apellido</label>
+                                  <input type="search" name="search2" class="form-control form-control"
+                                    placeholder="Ingrese el primer apellido">
+                                </div>
+                              </div>
+                              <div class="col-md-2">
+                                <div class="form-group">
+                                  <label>Segundo Apellido</label>
+                                  <input type="search" name="search3" class="form-control form-control"
+                                    placeholder="Ingrese el segundo apellido">
+                                </div>
+                              </div>
+                              <div class="col-md-2">
+                                <div class="form-group">
+                                  <label>o por RUN</label>
+                                  <input type="search" name="search4" class="form-control form-control"
+                                    onkeyup="formatCliente(this)" placeholder="o ingrese el run">
+                                </div>
+                              </div>
+                              <div class="col-md-3">
+                                <div class="form-group">
+                                  <label>Opciones</label><br>
+                                  <button type="submit" class="btn btn-primary"><i class="fas fa-search"></i>
+                                    Buscar</button>
+                                </div>
+                              </div>
+                            </div>
+                          </form>
+                    </div>
+                  </div>
+              </div>
+            </div>
+            <div class="container-fluid">
+              <!-- <h1>No has realizado una busqueda correcta</h1> -->
+              <div class="card card-info">
+                <div class="card-header">
+                  <h3 class="card-title"><b>Resultados encontrados</b></h3>
+                </div>
+                <!-- /.card-header -->
+                <div class="card-body">
+                  <blockquote class="quote-red col-md-12 bg-light" style="margin-top: -10px;">
+                    <h5>Atención</h5>
+                    <p>Sí requiere un resultado previo a enero de 2021, lo deberá solicitar directamente a la unidad de toma de muestras.</p>
+                  </blockquote>
+                  <div class="table-responsive">
+                    <table id="viewResult" class="table table-bordered table-striped" style="text-align: center">
+                      <thead>
+                        <tr> 
+                                  <th>Opciones</th>
+                                  <th>RUN</th>
+                                  <th>Nombre</th>
+                                  <th>Fecha</th>
+                                  <th>Numero de petición</th>
+                                  <th>Descargar</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <% for(let i=0;i < results.length; i++) { %>
+                          <tr>
+                            <td>
+                            <% if(locals.isLogged) { %>
+                              <% if(locals.userLogged.id_rol==1) { %>
+                                  <div class="btn-group">
+                                    <a href="/results/edit/<%= results[i].id %>/patient/<%= results[i].patient.id %>"
+                                      class="btn btn-success"><i class="fas fa-user-edit"></i> Editar</a>
+                                  </div>
+                              <% } %>
+                            <% } %>
+                                <div class="btn-group">
+                                <a href="/results/send/<%= results[i].id %>" class="btn btn-danger"><i
+                                 class="fas fa-envelope"></i> Enviar</a>
+                                </div>
+                                </td>
+                                <td>
+                                  <%= results[i].patient.run %>
+                                </td>
+                                <td>
+                                  <%= results[i].patient.first_name %>
+                                    <%= results[i].patient.last_name %> 
+                                    <%= results[i].patient.maiden_name %>
+                                </td>
+                                <td>
+                                  <%= results[i].date%>
+                                </td>
+                                <td>
+                                  <%= results[i].code_result %>
+                                </td>
+                                <td>
+                                  <div class="btn-group">
+                                    <a href="/pdf/<%= results[i].file %>" target="_blank" class="btn btn-primary"><i
+                                        class="fas fa-file-download"></i> Descargar</a>
+                                  </div>
+                                </td>
+                                <% } %>
+                          </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+                <!-- /.card-body -->
+              </div>
+              <!-- /.card -->
+            </div>
+            <!-- /.col -->
+          </div>
+          <!-- /.row -->
+          </section>
+    </div>
+    </div>
+    </div>
+    </div>
+    <%- include("../partials/footer.ejs") %>
+      <%- include("../partials/scripts.ejs") %>
+  </body>
+
+</html>

@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<%- include("../partials/head.ejs", {titulo: "Editar datos de usuarios" }) %>
+
+  <body class="hold-transition sidebar-mini layout-fixed dark-mode">
+    <div class="wrapper">
+      <%- include("../partials/navbar.ejs") %>
+        <%- include("../partials/navbar-left.ejs") %>
+          <div class="content-wrapper">
+            <div class="content-header">
+              <div class="container-fluid">
+                <div class="row mb-2">
+                  <div class="col-sm-6">
+                    <!-- Espacio para colocar un titulo general<h1 class="m-0">Dashboard</h1> -->
+                  </div>
+                </div>
+                <section class="content">
+                  <div class="container-fluid col-10">
+                    <div class="card card-info">
+                      <div class="card-header">
+                        <h3 class="card-title"><i class="fas fa-user-edit"></i> Modificar usuario</h3>
+                      </div>
+                      <div class="row">
+                        <div class="col-12">
+                          <!-- /.card-header -->
+                          <div class="card-body">
+                            <form action="/users/edit/<%= user.id %>?_method=PATCH" id="formEdit" method="POST">
+                              <% if (locals.errors && errors.duplicado) { %>
+                                <script>/* swal("Captcha requerido"); */
+                                  swal({
+                                    title: "Atención!",
+                                    text: '<%= errors.duplicado.msg %>',
+                                    icon: "error",
+                                    button: "Aceptar",
+                                  });  
+                                </script>
+                              <% } %>
+                              <div class="input-group mb-3 form-group">
+                                <div class="input-group bg-dark">
+                                <input type="text" name="first_name" class="form-control bg-dark" placeholder="Nombre"
+                                  value="<%= user.first_name %>">
+                                <div class="input-group-append">
+                                  <div class="input-group-text">
+                                    <span class="fas fa-user"></span>
+                                  </div>
+                                </div>
+                              </div>
+                              </div>
+                              <div class="input-group mb-3 form-group">
+                                <div class="input-group bg-dark">
+                                <input type="text" name="last_name" class="form-control bg-dark" placeholder="Apellido"
+                                  value="<%= user.last_name %>">
+                                <div class="input-group-append">
+                                  <div class="input-group-text">
+                                    <span class="fas fa-user"></span>
+                                  </div>
+                                </div>
+                              </div>
+                              </div>
+                              <div class="input-group mb-3 form-group">
+                                <div class="input-group bg-dark">
+                                <input type="text" name="email" class="form-control bg-dark" placeholder="Correo"
+                                  value="<%= user.email %>">
+                                <div class="input-group-append">
+                                  <div class="input-group-text">
+                                    <span class="fas fa-user"></span>
+                                  </div>
+                                </div>
+                              </div>
+                              </div>
+                              <div class="input-group mb-3 form-group">
+                                <div class="input-group bg-dark">
+                                <select class="form-control" name="role">
+                                  <option value="">Selecciona un rol</option>
+                                  <% for (let i=0; i < role.length; i++) { %>
+                                    <% if(role[i].id_rol==user.id_rol) { %>
+                                      <option value="<%=role[i].id_rol%>" selected>
+                                        <%=role[i].role%>
+                                      </option>
+                                      <% } else { %>
+                                          <option value="<%=role[i].id_rol%>">
+                                          <%=role[i].role%></option>
+                                      <% } %>
+                                    <% } %>
+                                </select>
+                              </div>
+                              </div>
+                              <div class="input-group mb-3 form-group">
+                                <div class="input-group bg-dark">
+                                <input type="password" name="password" class="form-control bg-dark"
+                                  placeholder="Contraseña" value="<%= user.password %>">
+                                <div class="input-group-append">
+                                  <div class="input-group-text">
+                                    <span class="fas fa-lock"></span>
+                                  </div>
+                                </div>
+                              </div>
+                              </div>
+                              <div class="input-group mb-3 form-group">
+                                <div class="input-group bg-dark">
+                                <select class="form-control" name="state">
+                                  <option value="">Condición</option>
+                                  <% for (let i=0; i < state.length; i++) { %>
+                                    <% if([i]==user.state) { %>
+                                      <option value="<%=[i]%>" selected>
+                                        <%=state[i]%>
+                                      </option>
+                                      <% } else { %>
+                                          <option value="<%=[i]%>">
+                                          <%=state[i]%></option>
+                                      <% } %>
+                                    <% } %>
+                                </select>
+                              </div>
+                              </div>
+                              <div class="row"> 
+                                <div class="col-8">
+                                  <div class="input-group bg-dark">
+                                    <a href="/users/view" class="btn btn-secondary" style="margin-right:10px;"><i class="fas fa-reply"></i> Volver</a>
+                                    <button type="submit" class="btn btn-success"><i class="fas fa-save"></i> Guardar</button>
+                                  </div>
+                                </div>
+                              </div>
+                            </form><br>
+                            <form action="/users/delete/<%= user.id %>?_method=DELETE" method="POST">
+                              <div class="row"> 
+                                <div class="col-8">
+                                  <button type="submit" class="btn btn-danger" style="margin-left: auto;"><i class="fas fa-trash"></i> Eliminar</button>
+                                </div> 
+                              </div>
+                            </form>
+                            <% if (locals.errors && errors.first_name) { %>
+                              <p style="color: rgb(204, 29, 29);">
+                                <%= errors.first_name.msg%>
+                              </p>
+                            <% } %>
+                            <% if (locals.errors && errors.last_name) { %>
+                              <p style="color: rgb(204, 29, 29);">
+                                <%= errors.last_name.msg%>
+                              </p>
+                            <% } %>
+                            <% if (locals.errors && errors.email) { %>
+                              <p style="color: rgb(204, 29, 29);">
+                                <%= errors.email.msg%>
+                              </p>
+                            <% } %>
+                            <% if (locals.errors && errors.password) { %>
+                              <p style="color: rgb(204, 29, 29);">
+                                <%= errors.password.msg%>
+                              </p>
+                            <% } %>
+                            <% if (locals.errors && errors.role) { %>
+                              <p style="color: rgb(204, 29, 29);">
+                                <%= errors.role.msg%>
+                              </p>
+                            <% } %>
+                          </div>
+                          <!-- /.card-body -->
+                        </div>
+                        <!-- /.card -->
+                      </div>
+                      <!-- /.col -->
+                    </div>
+                    <!-- /.row -->
+                  </div>
+                </section>
+              </div>
+            </div>
+          </div>
+    </div>
+    <%- include("../partials/scripts.ejs") %>
+    <%- include("../partials/footer.ejs") %>
+    <script src="/js/user.js"></script>
+  </body>
+</html>

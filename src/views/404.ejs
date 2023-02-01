@@ -1,0 +1,35 @@
+  <!DOCTYPE html>
+<html lang="en">
+<%- include("./partials/head.ejs", { titulo: "Error 404"}) %>
+
+  <body class="hold-transition sidebar-mini layout-fixed dark-mode">
+    <div class="wrapper">
+      <%- include("./partials/navbar.ejs") %>
+        <%- include("./partials/navbar-left.ejs") %>
+          <div class="content-wrapper">
+            <div class="content-header">
+              <div class="container-fluid">
+                <div class="row mb-2">
+                  <div class="col-sm-6">
+                    <!-- Espacio para colocar un titulo general<h1 class="m-0">Dashboard</h1> -->
+                  </div>
+                </div>
+                <!-- Acá colocar la vista -->
+                <section class="content">
+                  <div class="error-page">
+                    <h2 class="headline text-warning"> 404</h2>
+                    <div class="error-content">
+                      <h3><i class="fas fa-exclamation-triangle text-warning"></i> Pagina no encontrada, o no cuentas con los permisos para acceder.</h3>
+                    </div>
+                    <!-- /.error-content -->
+                  </div>
+                  <!-- /.error-page -->
+                </section>
+              </div>
+            </div>
+          </div>
+          <%- include("./partials/footer.ejs") %>
+      </div>
+    <%- include("./partials/scripts.ejs") %>
+  </body>
+</html>

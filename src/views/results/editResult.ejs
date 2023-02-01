@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<%- include("../partials/head.ejs", {titulo: "Editar datos de pacientes" }) %>
+
+  <body class="hold-transition sidebar-mini layout-fixed dark-mode">
+    <div class="wrapper">
+      <%- include("../partials/navbar.ejs") %>
+        <%- include("../partials/navbar-left.ejs") %>
+          <div class="content-wrapper">
+            <div class="content-header">
+              <div class="container-fluid">
+                <div class="row mb-2">
+                  <div class="col-sm-6">
+                    <!-- Espacio para colocar un titulo general<h1 class="m-0">Dashboard</h1> -->
+                  </div>
+                </div>
+                <section class="content">
+                  <div class="container-fluid col-10">
+                    <div class="card card-info">
+                      <div class="card-header">
+                        <h3 class="card-title"><i class="fas fa-edit"></i> Modificar resultado</h3>
+                      </div>
+                      <div class="row">
+                        <div class="col-12">
+                          <div class="card-body">
+                            <form action="/results/edit/<%= result.id %>/patient/<%= result.id_patient %>?_method=PATCH" id="editResult" method="POST" enctype="multipart/form-data">
+                              <div class="input-group mb-3 form-group">
+                                <label>Los datos personales no se pueden modificar</label>
+                                <div class="input-group bg-dark">
+                                  <input type="text" name="run" id="run" class="form-control bg-dark" placeholder="Run"
+                                    value="<%= result.patient.run %>" disabled>
+                                  <div class="input-group-append">
+                                    <div class="input-group-text">
+                                      <span class="fas fa-id-card"></span>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="input-group mb-3 form-group">
+                                <div class="input-group bg-dark">
+                                  <input type="text" name="first_name" id="first_name" class="form-control bg-dark" placeholder="Run"
+                                    value="<%= result.patient.first_name %>" disabled>
+                                  <div class="input-group-append">
+                                    <div class="input-group-text">
+                                      <span class="fas fa-id-card"></span>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="input-group mb-3 form-group">
+                                <div class="input-group bg-dark">
+                                  <input type="text" name="last_name" id="last_name" class="form-control bg-dark" placeholder="Run"
+                                    value="<%= result.patient.last_name %>" disabled>
+                                  <div class="input-group-append">
+                                    <div class="input-group-text">
+                                      <span class="fas fa-id-card"></span>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="input-group mb-3 form-group">
+                                <label>Fecha</label>
+                                <div class="input-group bg-dark">
+                                  <input type="date" name="date" id="date" class="form-control bg-dark" placeholder="Fecha"
+                                    value="<%= result.date %>">
+                                  <div class="input-group-append">
+                                    <div class="input-group-text">
+                                      <span class="fas fa-calendar"></span>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="input-group mb-3 form-group">
+                                <label>Codigo de examen</label>
+                                <div class="input-group bg-dark">
+                                  <input type="text" name="code" id="code" class="form-control bg-dark" placeholder="Codigo de resultado"
+                                    value="<%= result.code_result %>">
+                                  <div class="input-group-append">
+                                    <div class="input-group-text">
+                                      <span class="fas fa-id-card"></span>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="input-group mb-3 form-group">
+                                <label>Resultado. Si no cambiaras el archivo, no es necesario que lo vuelvas a subir</label>
+                                <div class="input-group bg-dark">
+                                  <input type="file" name="file" id="file" class="form-control">
+                                  <div class="input-group-append">
+                                    <div class="input-group-text">
+                                      <span class="fas fa-file-pdf"></span>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="row">
+                                <div class="col-4">
+                                  <a href="/results/view" class="btn btn-secondary" style="margin-right:10px;"><i
+                                      class="fas fa-reply"></i> Volver</a>
+                                  <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i>
+                                    Guardar</button>
+                                </div>
+                                <!-- /.col -->
+                              </div>
+                            </form><br>
+                            <form action="/results/delete/<%= result.id %>?_method=DELETE" method="POST">
+                              <div class="row"> 
+                                <div class="col-8">
+                                  <button type="submit" class="btn btn-danger" style="margin-left: auto;"><i class="fas fa-trash"></i> Eliminar</button>
+                                </div> 
+                              </div>
+                            </form>
+                            <% if (locals.errors && errors.date) { %>
+                              <p style="color: rgb(204, 29, 29);">
+                                <%= errors.date.msg %>
+                              </p>
+                            <% } %>
+                            <% if (locals.errors && errors.code) { %>
+                              <p style="color: rgb(204, 29, 29);">
+                                <%= errors.code.msg %>
+                              </p>
+                            <% } %>
+                            <% if (locals.errors && errors.file) { %>
+                              <p style="color: rgb(204, 29, 29);">
+                                <%= errors.file.msg %>
+                              </p>
+                            <% } %>
+                          </div>
+                          <!-- /.card-body -->
+                        </div>
+                        <!-- /.card -->
+                      </div>
+                      <!-- /.col -->
+                    </div>
+                    <!-- /.row -->
+                  </div>
+                </section>
+              </div>
+            </div>
+          </div>
+    </div>
+    <%- include("../partials/footer.ejs") %>
+      <%- include("../partials/scripts.ejs") %>
+      <script src="/js/uploadvalidate.js"></script>
+  </body>
+
+</html>

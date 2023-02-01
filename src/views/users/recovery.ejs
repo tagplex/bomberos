@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<%- include ("../partials/head.ejs", {titulo: "Recuperar contraseña" }) %>
+
+  <body class="hold-transition login-page bg-dark">
+    <div class="login-box bg-dark">
+      <div class="card card-outline card-primary bg-dark">
+        <div class="card-header text-center">
+          <a class="h1"><b>Recuperar contraseña</b></a>
+        </div>
+        <div class="card-body">
+          <form action="/users/recovery" id="formRecovery" method="POST">
+            <% if (locals.errors && errors.email) { %>
+              <p style="color: rgb(204, 29, 29);">
+                <%= errors.email.msg%>
+              </p>
+              <% } %>
+                <div class="input-group mb-3 form-group">
+                  <div class="input-group bg-dark">
+                    <input type="email" name="email" class="form-control bg-dark" placeholder="Correo">
+                    <div class="input-group-append">
+                      <div class="input-group-text bg-dark">
+                        <span class="fas fa-envelope"></span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <% if (locals.errors && errors.captcha) { %>
+                  <p style="color: rgb(204, 29, 29);">
+                    <%= errors.captcha.msg%>
+                  </p>
+                  <% } %>
+                  <div class="input-group mb-3 form-group">
+                    <div class="input-group bg-dark">
+                      <div class="mtcaptcha" style="width: 100%;"></div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-12">
+                      <button type="submit" class="btn btn-primary btn-block">Enviar contraseña</button>
+                    </div>
+                  </div>
+          </form>
+          <p class="mt-1 mb-1">
+            <a href="/users/login">Inciar sesión </a>
+          </p>
+        </div>
+      </div>
+    </div>
+    <%- include("../partials/scripts.ejs") %>
+    <script src="/js/recovery.js"></script>
+  </body>
+
+</html>

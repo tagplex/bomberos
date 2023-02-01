@@ -1,0 +1,70 @@
+<!-- jQuery -->
+
+<script src="/plugins/jquery/jquery.min.js"></script>
+<!-- jQuery UI 1.11.4 -->
+<script src="/plugins/jquery-ui/jquery-ui.min.js"></script>
+<!-- Bootstrap 4 -->
+<script src="/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+<!-- overlayScrollbars -->
+<script src="/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>
+<!-- AdminLTE App -->
+<script src="/dist/js/adminlte.js"></script>
+<!-- DataTables  & Plugins -->
+<script src="/plugins/datatables/jquery.dataTables.min.js"></script>
+<script src="/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
+<script src="/plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
+<script src="/plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
+<script src="/plugins/datatables-buttons/js/dataTables.buttons.min.js"></script>
+<script src="/plugins/datatables-buttons/js/buttons.bootstrap4.min.js"></script>
+<script src="/plugins/datatables-buttons/js/buttons.html5.min.js"></script>
+<script src="/plugins/datatables-buttons/js/buttons.print.min.js"></script>
+<script src="/plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
+<!-- jquery-validation -->
+<script src="/plugins/jquery-validation/jquery.validate.min.js"></script>
+<script src="/plugins/jquery-validation/additional-methods.min.js"></script>
+
+<!-- Recaptcha hcaptcha -->
+<script src="https://js.hcaptcha.com/1/api.js" async defer></script>
+
+<!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
+<script>
+  $.widget.bridge('uibutton', $.ui.button)
+</script>
+<script>
+  $(function () {
+    $("#viewUsers").DataTable({
+      "responsive": false, "lengthChange": false, "autoWidth": true,
+      "searching": true,
+    },).buttons().container().appendTo('#viewUsers_wrapper .col-md-6:eq(0)');
+  });
+</script>
+
+<script>
+  $(function () {
+    $("#viewPatients").DataTable({
+      "responsive": false, 
+      "lengthChange": false, 
+      "autoWidth": true,
+      searching: true,
+    },).buttons().container().appendTo('#viewPatients_wrapper .col-md-6:eq(0)');
+  });
+</script>
+
+<script>
+  $(function () {
+    $("#viewResult").DataTable({
+      "responsive": false,
+      "lengthChange": false,
+      "autoWidth": true,
+      ordering: true,
+      searching: false,
+    },).buttons().container().appendTo('#viewResult_wrapper .col-md-6:eq(0)');
+  });
+</script>
+
+<script type="text/javascript">
+  function formatCliente(run) {
+    run.value = run.value.replace(/[.-]/g, '')
+      .replace(/^(\d{1,2})(\d{3})(\d{3})(\w{1})$/, '$1.$2.$3-$4')
+  }
+</script>
