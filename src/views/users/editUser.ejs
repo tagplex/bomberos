@@ -73,12 +73,12 @@
                                 <select class="form-control" name="role">
                                   <option value="">Selecciona un rol</option>
                                   <% for (let i=0; i < role.length; i++) { %>
-                                    <% if(role[i].id_rol==user.id_rol) { %>
-                                      <option value="<%=role[i].id_rol%>" selected>
+                                    <% if(role[i].id==user.id_rol) { %>
+                                      <option value="<%=role[i].id%>" selected>
                                         <%=role[i].role%>
                                       </option>
                                       <% } else { %>
-                                          <option value="<%=role[i].id_rol%>">
+                                          <option value="<%=role[i].id%>">
                                           <%=role[i].role%></option>
                                       <% } %>
                                     <% } %>

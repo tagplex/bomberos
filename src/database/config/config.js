@@ -1,9 +1,9 @@
 module.exports = {
   "development": {
-    "username": "root",
-    "password": null,
-    "database": "bomberosquemchi",
-    "host": "127.0.0.1",
+    "username": "saludque_root",
+    "password": "Vizur.17812",
+    "database": "saludque_bomberos",
+    "host": "hera.servidoresph.com",
     "dialect": "mysql"
   },
   /* "development": {
@@ -19,12 +19,12 @@ module.exports = {
     "database": "database_test",
     "host": "127.0.0.1",
     "dialect": "mysql"
-  },
+  }, */
   "production": {
     "username": "saludque_root",
     "password": "Vizur.17812",
-    "database": "saludque_apsquemchi",
+    "database": "saludque_bomberos",
     "host": "hera.servidoresph.com",
     "dialect": "mysql"
-  } */
+  } 
 }

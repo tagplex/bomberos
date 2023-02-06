@@ -84,7 +84,7 @@
                                   <select class="form-control bg-dark" name="role">
                                     <option value="">Selecciona un rol</option>
                                     <% for (let i=0; i < roles.length; i++) { %>
-                                      <option value="<%=roles[i].id_rol%>">
+                                      <option value="<%=roles[i].id%>">
                                         <%=roles[i].role%>
                                       </option>
                                       <% } %>
@@ -145,8 +145,8 @@
           </div>
     </div>
     <%- include("../partials/scripts.ejs") %>
-      <%- include("../partials/footer.ejs") %>
-        <!-- <script src="/js/user.js"></script> -->
+    <%- include("../partials/footer.ejs") %>
+    <script src="/js/user.js"></script>
   </body>
 
 </html>
