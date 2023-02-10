@@ -19,9 +19,9 @@ const controladorMain ={
     test: (req, res) => {
         let location = db.Itemsvehicle.findAll({
             include: [
-                { association: 'user', attributes: ['email']},
-                { association: 'vehicle', attributes: ['PPU']},
-                { association: 'typeitem', attributes: ['name']}
+                { association: 'user', attributes: ['email','first_name','last_name','password','id_rol']},
+                { association: 'vehicle', attributes: ['brand','PPU','year']},
+                { association: 'typeitem', attributes: ['id','name']}
             ]} 
         )
         .then(function (location) {
