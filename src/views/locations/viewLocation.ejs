@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<%- include("../partials/head.ejs", {titulo: "Busqueda de cuarteles" }) %>
+
+  <body class="hold-transition sidebar-mini layout-fixed dark-mode">
+    <div class="wrapper">
+      <%- include("../partials/navbar.ejs") %>
+        <%- include("../partials/navbar-left.ejs") %>
+          <section class="content">
+            <div class="content-wrapper">
+              <div class="content-header">
+              <div class="container-fluid">
+                <% if (locals.errors && errors.run) { %>
+                  <p style="color: rgb(204, 29, 29);">
+                    <%= errors.run.msg %>
+                  </p>
+                <% } %>
+                <% if (locals.errors && errors.first_name) { %>
+                  <p style="color: rgb(204, 29, 29);">
+                    <%= errors.first_name.msg %>
+                  </p>
+                <% } %>
+                <% if (locals.errors && errors.last_name) { %>
+                  <p style="color: rgb(204, 29, 29);">
+                    <%= errors.last_name.msg %>
+                  </p>
+                <% } %>
+                <% if (locals.errors && errors.maiden_name) { %>
+                  <p style="color: rgb(204, 29, 29);">
+                    <%= errors.maiden_name.msg %>
+                  </p>
+                <% } %> 
+                <!-- <h1>No has realizado una busqueda correcta</h1> -->
+                <div class="card card-info">
+                  <div class="card-header">
+                    <h3 class="card-title"><b>Pacientes encontrados</b></h3>
+                  </div>
+                  <!-- /.card-header -->
+                  <div class="card-body">
+                    <div class="table-responsive">
+                    <table id="viewResult" class="table table-bordered table-striped" cellspacing="0"
+                      width="100%" style="text-align: center">
+                      <thead>
+                        <tr>
+                          <th>Opciones</th>
+                          <th>Nombre</th>
+                          <th>Ubicacion</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <% for(let i=0;i < locations.length; i++) { %>
+                          <tr>
+                            <td>
+                              <div class="btn-group">
+                                <a href="/location/edit/<%= locations[i].id %>" class="btn btn-success"><i
+                                    class="fas fa-user-edit"></i> Editar</a>
+                              </div>
+                            </td>
+                            <td>
+                              <%= locations[i].name %>
+                            </td>
+                            <td>
+                              <%= locations[i].location %>
+                            </td>
+                            <% } %>
+                          </tr>
+                      </tbody>
+                    </table>
+                    </div>
+                  </div>
+                </div>
+                  <!-- /.card-body -->
+                  <!-- Modal creación de usuario -->
+                  <div class="modal fade" id="modalCreatePatient" tabindex="-1" role="dialog"
+                    aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h5 class="modal-title" id="exampleModalLabel"><i class="fas fa-user-plus"></i> Crear paciente
+                          </h5>
+                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                          </button>
+                        </div>
+                        <div class="modal-body">
+                          <div class="card-body">
+                            <form action="/patients" id="formRegister" method="POST">
+                              <% if (locals.errors && errors.runexist) { %>
+                                <script>/* swal("Captcha requerido"); */
+                                  swal({
+                                    title: "Atención!",
+                                    text: '<%= errors.runexist.msg %>',
+                                    icon: "error",
+                                    button: "Aceptar",
+                                  });  
+                                </script>
+                              <% } %>
+                              <div class="input-group mb-3 form-group">
+                                <div class="input-group bg-dark">
+                                <input type="text" class="form-control bg-dark" name="run" id="run" placeholder="RUN"
+                                  onkeyup="formatCliente(this)" value="<%= locals.oldData ? oldData.run : null %>">
+                                </div>  
+                              </div>
+                              <div class="input-group mb-3 form-group">
+                                <div class="input-group bg-dark">
+                                <input type="text" name="first_name" class="form-control bg-dark" placeholder="Nombre" value="<%= locals.oldData ? oldData.first_name : null %>">
+                              </div>
+                              </div>
+                              <div class="input-group mb-3 form-group">
+                                <div class="input-group bg-dark">
+                                <input type="text" name="last_name" class="form-control bg-dark"
+                                  placeholder="Primer apellido" value="<%= locals.oldData ? oldData.last_name : null %>">
+                                </div>
+                              </div>
+                              <div class="input-group mb-3 form-group">
+                                <div class="input-group bg-dark">
+                                <input type="text" name="maiden_name" class="form-control bg-dark"
+                                  placeholder="Segundo apellido" value="<%= locals.oldData ? oldData.maiden_name : null %>">
+                                </div>
+                              </div>
+                              <div class="row">
+                                <div class="col-8">
+                                  <button type="button" class="btn btn-secondary" data-dismiss="modal" xsstyle="margin-right:10px;"><i class="fas fa-reply"></i> Cerrar</button>
+                                  <button type="submit" class="btn btn-success"><i class="fas fa-user-plus"></i>
+                                    Registrar</button>
+                                </div>
+                                <!-- /.col -->
+                              </div>
+                            </form>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <!-- /.card -->
+              </div>
+              <!-- /.col -->
+            </div>
+            <!-- /.row -->
+          </section>
+    </div>
+    <%- include("../partials/footer.ejs") %>
+    <%- include("../partials/scripts.ejs") %>
+      <script src="/js/patient.js"></script>
+  </body>
+
+</html>

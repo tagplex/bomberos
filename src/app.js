@@ -33,11 +33,14 @@ app.set('views', path.join(__dirname, '/views'));
 const mainRouter = require("./routes/main");
 /* const resultsRouter = require("./routes/result"); */
 const userRouter = require("./routes/user");
+const locationRouter = require("./routes/location")
+const vehicleRouter = require("./routes/vehicle")
 /* const patientRouter = require("./routes/patient"); */
 
 app.use('/', mainRouter); //Rutas del menu principal
-/* app.use('/results', resultsRouter); // Ruta para resultados */
 app.use('/users', userRouter);
+app.use('/locations', locationRouter);
+app.use('/vehicles', vehicleRouter);
 /* app.use('/patients', patientRouter); */
 
 app.listen(3000, () => {

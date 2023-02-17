@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<%- include("../partials/head.ejs", {titulo: "Editar datos de pacientes" }) %>
+  <body class="hold-transition sidebar-mini layout-fixed dark-mode">
+    <div class="wrapper">
+      <%- include("../partials/navbar.ejs") %>
+        <%- include("../partials/navbar-left.ejs") %>
+          <div class="content-wrapper">
+            <div class="content-header">
+              <div class="container-fluid">
+                <div class="row mb-2">
+                  <div class="col-sm-6">
+                    <!-- Espacio para colocar un titulo general<h1 class="m-0">Dashboard</h1> -->
+                  </div>
+                </div>
+                <section class="content">
+                  <div class="container-fluid col-10">
+                    <div class="card card-info">
+                      <div class="card-header">
+                        <h3 class="card-title"><i class="fas fa-edit"></i> Modificar paciente</h3>
+                      </div>
+                      <div class="row">
+                        <div class="col-12">
+                          <div class="card-body">
+                            <form action="/patients/edit/<%= patient.id %>?_method=PATCH" id="formEdit" method="POST">
+                              <% if (locals.errors && errors.runexist) { %>
+                                <script>/* swal("Captcha requerido"); */
+                                  swal({
+                                    title: "Atención!",
+                                    text: '<%= errors.runexist.msg %>',
+                                    icon: "error",
+                                    button: "Aceptar",
+                                  });  
+                                </script>
+                              <% } %>
+                              <div class="input-group mb-3 form-group">
+                                <div class="input-group bg-dark">
+                                <input type="text" name="run" id="run" class="form-control bg-dark" placeholder="Run"
+                                  value="<%= patient.run %>" onkeyup="formatCliente(this)">
+                                <div class="input-group-append">
+                                  <div class="input-group-text">
+                                    <span class="fas fa-id-card"></span>
+                                  </div>
+                                </div>
+                              </div>
+                              </div>
+                              <div class="input-group mb-3 form-group">
+                                <div class="input-group bg-dark">
+                                <input type="text" name="first_name" class="form-control bg-dark" placeholder="Nombre"
+                                  value="<%= patient.first_name %>">
+                                <div class="input-group-append">
+                                  <div class="input-group-text">
+                                    <span class="fas fa-smile"></span>
+                                  </div>
+                                </div>
+                              </div>
+                              </div>
+                              <div class="input-group mb-3 form-group">
+                                <div class="input-group bg-dark">
+                                <input type="text" name="last_name" class="form-control bg-dark" placeholder="Primer apellido"
+                                  value="<%= patient.last_name %>">
+                                <div class="input-group-append">
+                                  <div class="input-group-text">
+                                    <span class="fas fa-user"></span>
+                                  </div>
+                                </div>
+                              </div>
+                              </div>
+                              <div class="input-group mb-3 form-group">
+                                <div class="input-group bg-dark">
+                                <input type="text" name="maiden_name" class="form-control bg-dark" placeholder="Segundo apellido"
+                                  value="<%= patient.maiden_name %>">
+                                <div class="input-group-append">
+                                  <div class="input-group-text">
+                                    <span class="fas fa-user"></span>
+                                  </div>
+                                </div>
+                              </div>
+                              </div>
+                              <br>
+                              <div class="row">
+                                <div class="col-4">
+                                  <a href="/patients/view" class="btn btn-secondary" style="margin-right:10px;"><i class="fas fa-reply"></i> Volver</a>
+                                  <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> Guardar</button>
+                                </div>
+                                <!-- /.col -->
+                              </div>
+                            </form>
+                            <% if (locals.errors && errors.run) { %>
+                              <p style="color: rgb(204, 29, 29);">
+                                <%= errors.run.msg %>
+                              </p>
+                            <% } %>
+                            <% if (locals.errors && errors.first_name) { %>
+                              <p style="color: rgb(204, 29, 29);">
+                                <%= errors.first_name.msg %>
+                              </p>
+                            <% } %>
+                            <% if (locals.errors && errors.last_name) { %>
+                              <p style="color: rgb(204, 29, 29);">
+                                <%= errors.last_name.msg %>
+                              </p>
+                            <% } %>
+                            <% if (locals.errors && errors.maiden_name) { %>
+                              <p style="color: rgb(204, 29, 29);">
+                                <%= errors.maiden_name.msg %>
+                              </p>
+                            <% } %> 
+                          </div>
+                          <!-- /.card-body -->
+                        </div>
+                        <!-- /.card -->
+                      </div>
+                      <!-- /.col -->
+                    </div>
+                    <!-- /.row -->
+                  </div>
+                </section>
+              </div>
+            </div>
+          </div>
+    </div>
+    <%- include("../partials/footer.ejs") %>
+      <%- include("../partials/scripts.ejs") %>
+        <script src="/js/patient.js"></script>
+  </body>
+</html>
